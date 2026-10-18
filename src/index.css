@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html,
+  body {
+    @apply h-full overflow-hidden;
+    /* zoom: 0.8;  <-- CAUSA ERRORES DE DISEÑO */
+    font-size: 80%;
+    /* Manera correcta de escalar Tailwind globalmente (rems) */
+  }
+
+  #root {
+    @apply h-full;
+  }
+}
+
+/* Theme System - Dynamic color overrides */
+@layer components {
+
+  /* Tema Amber (Default) */
+  [data-theme="amber"] {
+    /* Amber/Orange colors remain as default */
+  }
+
+  /* Tema Oscuro (Dark) */
+  [data-theme="dark"] .bg-amber-500,
+  [data-theme="dark"] .from-amber-500,
+  [data-theme="dark"] .to-amber-600 {
+    background-color: #4b5563 !important;
+  }
+
+  [data-theme="dark"] .bg-amber-600,
+  [data-theme="dark"] .hover\:bg-amber-600:hover {
+    background-color: #374151 !important;
+  }
+
+  [data-theme="dark"] .bg-amber-100 {
+    background-color: #f3f4f6 !important;
+  }
+
+  [data-theme="dark"] .text-amber-600,
+  [data-theme="dark"] .text-amber-700 {
+    color: #6b7280 !important;
+  }
+
+  [data-theme="dark"] .border-amber-200,
+  [data-theme="dark"] .border-amber-500 {
+    border-color: #6b7280 !important;
+  }
+
+  [data-theme="dark"] .bg-orange-500,
+  [data-theme="dark"] .from-orange-500 {
+    background-color: #6b7280 !important;
+  }
+
+  [data-theme="dark"] .bg-orange-600,
+  [data-theme="dark"] .hover\:bg-orange-600:hover {
+    background-color: #4b5563 !important;
+  }
+
+  [data-theme="dark"] .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, #4b5563, #374151) !important;
+  }
+
+  [data-theme="dark"] .bg-gradient-to-r {
+    background-image: linear-gradient(to right, #4b5563, #374151) !important;
+  }
+
+  /* Tema Azul (Blue) */
+  [data-theme="blue"] .bg-amber-500,
+  [data-theme="blue"] .from-amber-500,
+  [data-theme="blue"] .to-amber-600 {
+    background-color: #3b82f6 !important;
+  }
+
+  [data-theme="blue"] .bg-amber-600,
+  [data-theme="blue"] .hover\:bg-amber-600:hover {
+    background-color: #2563eb !important;
+  }
+
+  [data-theme="blue"] .bg-amber-100 {
+    background-color: #dbeafe !important;
+  }
+
+  [data-theme="blue"] .text-amber-600,
+  [data-theme="blue"] .text-amber-700 {
+    color: #2563eb !important;
+  }
+
+  [data-theme="blue"] .border-amber-200,
+  [data-theme="blue"] .border-amber-500 {
+    border-color: #3b82f6 !important;
+  }
+
+  [data-theme="blue"] .bg-orange-500,
+  [data-theme="blue"] .from-orange-500 {
+    background-color: #0ea5e9 !important;
+  }
+
+  [data-theme="blue"] .bg-orange-600,
+  [data-theme="blue"] .hover\:bg-orange-600:hover {
+    background-color: #0284c7 !important;
+  }
+
+  [data-theme="blue"] .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, #3b82f6, #2563eb) !important;
+  }
+
+  [data-theme="blue"] .bg-gradient-to-r {
+    background-image: linear-gradient(to right, #3b82f6, #0ea5e9) !important;
+  }
+
+  /* Tema Verde (Green) */
+  [data-theme="green"] .bg-amber-500,
+  [data-theme="green"] .from-amber-500,
+  [data-theme="green"] .to-amber-600 {
+    background-color: #10b981 !important;
+  }
+
+  [data-theme="green"] .bg-amber-600,
+  [data-theme="green"] .hover\:bg-amber-600:hover {
+    background-color: #059669 !important;
+  }
+
+  [data-theme="green"] .bg-amber-100 {
+    background-color: #d1fae5 !important;
+  }
+
+  [data-theme="green"] .text-amber-600,
+  [data-theme="green"] .text-amber-700 {
+    color: #059669 !important;
+  }
+
+  [data-theme="green"] .border-amber-200,
+  [data-theme="green"] .border-amber-500 {
+    border-color: #10b981 !important;
+  }
+
+  [data-theme="green"] .bg-orange-500,
+  [data-theme="green"] .from-orange-500 {
+    background-color: #14b8a6 !important;
+  }
+
+  [data-theme="green"] .bg-orange-600,
+  [data-theme="green"] .hover\:bg-orange-600:hover {
+    background-color: #0d9488 !important;
+  }
+
+  [data-theme="green"] .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, #10b981, #059669) !important;
+  }
+
+  [data-theme="green"] .bg-gradient-to-r {
+    background-image: linear-gradient(to right, #10b981, #14b8a6) !important;
+  }
+}
+
+@layer utilities {
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-slideInLeft {
+    animation: slideInLeft 0.3s ease-out;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  /* Global sleek thin scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.4);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.7);
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  /* Utility classes to completely hide scrollbars or show ultra-thin bar */
+  .scrollbar-hide::-webkit-scrollbar,
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .scrollbar-hide,
+  .no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 3px !important;
+    width: 3px !important;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(217, 119, 6, 0.4) !important;
+    border-radius: 9999px !important;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(217, 119, 6, 0.8) !important;
+  }
+
+  /* Custom scrollbar for dark modals */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Sala modal animations (replacement for tailwindcss-animate) */
+  @keyframes salaFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes salaSlideInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes salaSlideInUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .sala-fade-in          { animation: salaFadeIn 0.2s ease-out both; }
+  .sala-slide-in-right   { animation: salaSlideInRight 0.25s cubic-bezier(0.22,1,0.36,1) both; }
+  .sala-slide-in-up      { animation: salaSlideInUp 0.25s cubic-bezier(0.22,1,0.36,1) both; }
+}
