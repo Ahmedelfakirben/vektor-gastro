@@ -76,13 +76,13 @@ export function LoginForm() {
 
       <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-md p-10 border border-white/20 relative z-10 animate-fadeIn">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl mb-6 shadow-xl transform hover:scale-110 transition-transform duration-300">
-            <Coffee className="w-10 h-10 text-white" />
+          <div className="inline-flex items-center justify-center w-28 h-28 rounded-2xl mb-5 shadow-2xl transform hover:scale-105 transition-transform duration-300 overflow-hidden border border-amber-500/30 bg-slate-950 p-1">
+            <img src="/logo.png" alt="Vektor Gastro" className="w-full h-full object-cover rounded-xl" />
           </div>
-          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-2">
-            LIN-Caisse
+          <h1 className="text-3xl font-black bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent mb-1 tracking-tight">
+            Vektor Gastro
           </h1>
-          <p className="text-gray-600 font-medium">{t('Sistema de Gestión')}</p>
+          <p className="text-gray-600 font-semibold text-sm tracking-wide uppercase">{t('TPV & Gestión Hostelería')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -152,6 +152,27 @@ export function LoginForm() {
             ) : (
               t('Iniciar Sesión')
             )}
+          </button>
+
+          <div className="relative flex py-1 items-center">
+            <div className="flex-grow border-t border-gray-300"></div>
+            <span className="flex-shrink mx-3 text-gray-400 text-xs uppercase font-bold tracking-wider">o acceso rápido</span>
+            <div className="flex-grow border-t border-gray-300"></div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('mouad@coffe.com');
+              setPassword('U8vBdR2zARcm');
+              setTimeout(() => {
+                const formEl = document.querySelector('form');
+                if (formEl) formEl.requestSubmit();
+              }, 50);
+            }}
+            className="w-full bg-slate-950 hover:bg-slate-900 text-amber-400 border border-amber-500/40 font-bold py-3 px-4 rounded-xl shadow-md transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01]"
+          >
+            <span>🚀 Probar Demo Interactiva (1 Clic)</span>
           </button>
         </form>
 

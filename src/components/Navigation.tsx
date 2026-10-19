@@ -709,11 +709,9 @@ export function Navigation({ currentView, onViewChange }: NavigationProps) {
         <div className="w-full px-4 lg:px-6">
           <div className="hidden lg:flex items-center justify-between h-20">
             <div className="flex-shrink-0 flex items-center gap-3">
-              <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <Coffee className="w-8 h-8 text-white" />
-              </div>
+              <img src="/logo.png" alt="Vektor Gastro" className="w-12 h-12 rounded-xl object-cover shadow-md border border-amber-500/20" />
               <div>
-                <h1 className="text-2xl font-extrabold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">LIN-Caisse</h1>
+                <h1 className="text-2xl font-extrabold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Vektor Gastro</h1>
                 <p className="text-sm text-gray-600 font-medium">{t('Sistema de Gestión')}</p>
               </div>
             </div>
@@ -870,7 +868,8 @@ export function Navigation({ currentView, onViewChange }: NavigationProps) {
             ) : (
               <>
                 <div className="flex items-center gap-2">
-                  <span className="font-extrabold text-amber-600 text-lg">LIN-Caisse</span>
+                  <img src="/logo.png" alt="Vektor Gastro" className="w-7 h-7 rounded-lg object-cover" />
+                  <span className="font-extrabold text-amber-600 text-lg">Vektor Gastro</span>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(true)}
