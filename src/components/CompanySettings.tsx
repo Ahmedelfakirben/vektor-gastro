@@ -4,6 +4,7 @@ import { Building2, MapPin, Phone, Save, AlertCircle, Printer, RefreshCw } from 
 import { toast } from 'react-hot-toast';
 import { useLanguage } from '../contexts/LanguageContext';
 import { qzService } from '../lib/qzTray';
+import { imprentaService } from '../lib/imprentaTray';
 
 interface CompanySettings {
   id: string;
@@ -208,22 +209,24 @@ export function CompanySettings() {
       if (settings.qz_server_ip !== undefined) {
         localStorage.setItem('qz_server_ip', (settings.qz_server_ip || '').trim());
       }
-      await qzService.disconnect();
-      const printers = await qzService.getPrinters(settings.qz_server_ip?.trim() || undefined);
+      let printers: string[] = [];
+      try {
+        printers = await imprentaService.getPrinters();
+      } catch (_) {}
+      if (!printers || printers.length === 0) {
+        await qzService.disconnect();
+        printers = await qzService.getPrinters(settings.qz_server_ip?.trim() || undefined);
+      }
       setQzPrinters(printers);
       if (printers.length > 0) {
-        toast.success(`Conexión QZ Tray exitosa. ${printers.length} impresoras encontradas.`);
+        toast.success(`Conexión exitosa. ${printers.length} impresoras encontradas.`);
       } else {
-        toast.error('QZ Tray respondió pero devolvió lista vacía de impresoras. Revisa el certificado o permisos en QZ Tray.');
+        toast.error('No se encontraron impresoras activas. Asegúrate de tener Imprenta Labs o QZ Tray abierto.');
       }
     } catch (err) {
-      console.error('Error testeando QZ Tray:', err);
+      console.error('Error testeando conexión de impresión:', err);
       const errMsg = err instanceof Error ? err.message : String(err);
-      if (errMsg.includes('Unable to establish connection') || errMsg.includes('Failed to fetch')) {
-        toast.error('El navegador bloqueó la conexión WSS segura con QZ Tray. Abre https://localhost:8181 en otra pestaña y pulsa "Continuar / Avanzado".', { duration: 8000 });
-      } else {
-        toast.error(`Error conectando a QZ Tray: ${errMsg}`);
-      }
+      toast.error(`Error de conexión: ${errMsg}`);
     } finally {
       setCheckingQZ(false);
     }

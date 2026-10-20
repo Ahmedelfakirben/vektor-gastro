@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { useCurrency } from '../contexts/CurrencyContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { qzService, isMobileDevice } from '../lib/qzTray';
+import { imprentaService } from '../lib/imprentaTray';
 import { markOrderPrintedLocally } from '../lib/printerService';
 
 // Add a function to refresh company info that can be called from outside
@@ -178,16 +179,22 @@ export function TicketPrinter({
 <body>${printContent}</body>
 </html>`;
 
-      // Try silent print via QZ Tray first (no browser dialog)
+      // Try silent print via Imprenta Labs first, then QZ Tray (no browser dialog)
       try {
-        const printed = await qzService.printHTML('', fullHtml, true);
+        let printed = false;
+        try {
+          printed = await imprentaService.printHTML('', fullHtml, false);
+        } catch (_) {}
+        if (!printed) {
+          printed = await qzService.printHTML('', fullHtml, true);
+        }
         if (printed) {
-          console.log('✅ TICKET: Printed silently via QZ Tray');
+          console.log('✅ TICKET: Printed silently');
           window.dispatchEvent(new CustomEvent('ticketPrinted'));
           return;
         }
       } catch (err) {
-        console.warn('⚠️ TICKET: QZ Tray not available, skipping ticket print:', err);
+        console.warn('⚠️ TICKET: Printing error:', err);
       }
 
       // QZ Tray not available — skip print silently (no browser dialog)

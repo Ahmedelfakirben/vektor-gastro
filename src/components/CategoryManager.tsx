@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { useLanguage } from '../contexts/LanguageContext';
 import { qzService } from '../lib/qzTray';
+import { imprentaService } from '../lib/imprentaTray';
 
 interface Category {
   id: string;
@@ -30,7 +31,13 @@ export function CategoryManager() {
 
   const loadPrinters = async () => {
     try {
-      const printers = await qzService.getPrinters();
+      let printers: string[] = [];
+      try {
+        printers = await imprentaService.getPrinters();
+      } catch (_) {}
+      if (!printers || printers.length === 0) {
+        printers = await qzService.getPrinters();
+      }
       if (printers && printers.length > 0) {
         setAvailablePrinters(printers);
       }
@@ -204,11 +211,11 @@ export function CategoryManager() {
           <div className="flex-1">
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium text-gray-700">
-                Impresora / Zona (QZ Tray)
+                {t('Impresora / Zona de Preparación')}
               </label>
               {availablePrinters.length > 0 && (
                 <span className="text-xs text-emerald-600 font-medium">
-                  ● QZ detectado ({availablePrinters.length})
+                  ● {t('Impresoras detectadas')} ({availablePrinters.length})
                 </span>
               )}
             </div>

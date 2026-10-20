@@ -1,4 +1,5 @@
 import { qzService } from './qzTray';
+import { imprentaService } from './imprentaTray';
 
 export interface KitchenPrintParams {
   orderNum: string;
@@ -37,9 +38,14 @@ export const printKitchenRoutingDetailed = async (params: KitchenPrintParams): P
 
       let resolved: string | null = null;
       try {
-        resolved = await qzService.resolvePrinter(cleanZone);
-      } catch (e) {
-        console.warn('Error resolviendo impresora para zona:', cleanZone, e);
+        resolved = await imprentaService.resolvePrinter(cleanZone);
+      } catch (_) {}
+      if (!resolved) {
+        try {
+          resolved = await qzService.resolvePrinter(cleanZone);
+        } catch (e) {
+          console.warn('Error resolviendo impresora para zona:', cleanZone, e);
+        }
       }
 
       // Si no se pudo resolver con QZ Tray, usar la zona en mayúsculas o 'DEFAULT'
@@ -159,7 +165,13 @@ export const printKitchenRoutingDetailed = async (params: KitchenPrintParams): P
       console.log(`🖨️ KITCHEN ROUTING: Enviando comanda unificada a impresora "${targetPrinter}" con ${items.length} artículos...`);
       const printerArg = targetPrinter === 'DEFAULT' ? '' : targetPrinter;
       try {
-        const success = await qzService.printHTML(printerArg, html);
+        let success = false;
+        try {
+          success = await imprentaService.printHTML(printerArg, html);
+        } catch (_) {}
+        if (!success) {
+          success = await qzService.printHTML(printerArg, html);
+        }
         if (success) {
           printedPrinters.push(targetPrinter);
         } else {
@@ -306,11 +318,15 @@ export const printMainTicket = async (params: TicketPrintParams): Promise<boolea
 <body>${printContent}</body>
 </html>`;
 
-    // allowFallback=false: en el servidor de impresión no se abren ventanas del navegador si QZ falla;
-    // el fallo se devuelve como false y el trabajo queda 'failed' en el monitor (con opción de Reintentar).
-    const printed = await qzService.printHTML('', fullHtml, false);
+    let printed = false;
+    try {
+      printed = await imprentaService.printHTML('', fullHtml, false);
+    } catch (_) {}
+    if (!printed) {
+      printed = await qzService.printHTML('', fullHtml, false);
+    }
     if (printed) {
-      console.log('✅ TICKET: Printed silently via QZ Tray');
+      console.log('✅ TICKET: Printed silently');
       window.dispatchEvent(new CustomEvent('ticketPrinted'));
     }
     return !!printed;

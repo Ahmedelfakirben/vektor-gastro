@@ -6,6 +6,7 @@ import { RefreshCw, CheckCircle, XCircle, Clock, Printer, AlertTriangle, Search 
 import { format } from 'date-fns';
 import { toast } from 'react-hot-toast';
 import { qzService } from '../lib/qzTray';
+import { imprentaService } from '../lib/imprentaTray';
 
 export function PrintMonitor() {
   const { t } = useLanguage();
@@ -91,13 +92,19 @@ export function PrintMonitor() {
       if (qzServerIp !== undefined) {
         localStorage.setItem('qz_server_ip', (qzServerIp || '').trim());
       }
-      await qzService.disconnect();
-      const printers = await qzService.getPrinters(qzServerIp?.trim() || undefined);
+      let printers: string[] = [];
+      try {
+        printers = await imprentaService.getPrinters();
+      } catch (_) {}
+      if (!printers || printers.length === 0) {
+        await qzService.disconnect();
+        printers = await qzService.getPrinters(qzServerIp?.trim() || undefined);
+      }
       setQzPrinters(printers);
       if (printers.length > 0) {
-        toast.success(`Conexión QZ Tray exitosa. ${printers.length} impresoras encontradas.`);
+        toast.success(`Conexión exitosa. ${printers.length} impresoras encontradas.`);
       } else {
-        toast.error('QZ Tray respondió pero devolvió lista vacía de impresoras. Revisa el certificado o permisos en QZ Tray.');
+        toast.error('No se encontraron impresoras activas. Asegúrate de tener Imprenta Labs o QZ Tray abierto.');
       }
     } catch (err) {
       console.error('Error testeando QZ Tray:', err);
