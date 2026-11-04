@@ -120,6 +120,7 @@ export default defineConfig(({ mode }) => {
     exclude: ['lucide-react'],
   },
   build: {
+    sourcemap: false,
     modulePreload: false,
     chunkSizeWarningLimit: 600,
     rollupOptions: {

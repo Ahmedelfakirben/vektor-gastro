@@ -1,7 +1,7 @@
 import qz from 'qz-tray';
 import { toast } from 'react-hot-toast';
 import forge from 'node-forge';
-import { QZ_CERTIFICATE, QZ_PRIVATE_KEY } from './qz_cert';
+import { QZ_CERTIFICATE } from './qz_cert';
 
 export interface PrintData {
   printerName: string;

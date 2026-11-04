@@ -153,27 +153,6 @@ export function LoginForm() {
               t('Iniciar Sesión')
             )}
           </button>
-
-          <div className="relative flex py-1 items-center">
-            <div className="flex-grow border-t border-gray-300"></div>
-            <span className="flex-shrink mx-3 text-gray-400 text-xs uppercase font-bold tracking-wider">o acceso rápido</span>
-            <div className="flex-grow border-t border-gray-300"></div>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              setEmail('mouad@coffe.com');
-              setPassword('U8vBdR2zARcm');
-              setTimeout(() => {
-                const formEl = document.querySelector('form');
-                if (formEl) formEl.requestSubmit();
-              }, 50);
-            }}
-            className="w-full bg-slate-950 hover:bg-slate-900 text-amber-400 border border-amber-500/40 font-bold py-3 px-4 rounded-xl shadow-md transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01]"
-          >
-            <span>🚀 Probar Demo Interactiva (1 Clic)</span>
-          </button>
         </form>
 
       </div>
